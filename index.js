@@ -1,85 +1,110 @@
+const container = document.getElementById('container');
+let playerScore = 0;
+let computerScore = 0;
+
+//create and append Rock button
+const rock = document.createElement("button");
+rock.innerText = 'Rock';
+container.appendChild(rock);
+
+//create and append Paper button
+const paper = document.createElement("button");
+paper.innerText = "Paper";
+container.appendChild(paper);
+
+//create and append Scissors button
+const scissors = document.createElement("button");
+scissors.innerText = "Scissors";
+container.appendChild(scissors);
+
+//keeps track of who played what
+const div1 = document.createElement("div");
+div1.innerText = "";
+container.appendChild(div1);
+
+//keeps track of score
+const div = document.createElement("div");
+div.innerText = "";
+container.appendChild(div);
+
+
+//creates eventListener that runs PlayRound() when a button is pressed, and when score of a player is 5
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if(playerScore === 5)
+            div1.innerText = "You Won! :)";
+        else if (computerScore === 5)
+            div1.innerText = "You Lost! :(";
+        else{
+            playRound(button.innerText.toLowerCase(), getComputerChoice());
+        }
+    });
+    div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
+});
+
+//plays round of rock, paper, and scissors
 function playRound(player, pc){
+    console.log(player);
     if (player === "rock"){
         if (pc === "rock"){
-            console.log("rr");
-            return "It's a draw! You both drew Rock!";
+            div1.innerText = "You played " + player + ", and PC played " + pc + ". It's a tie!";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else if (pc === "paper"){
-            console.log("rp");
             computerScore++;
-            return ("You lose! Paper beats rock!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else{
-            console.log("rs");
             playerScore++;
-            return ("You win! Rock beats Scissors!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
     }
 
     if (player === "paper"){
         if (pc === "rock"){
-            console.log("pr");
             playerScore++;
-            return "You win! Paper beats Rock!";
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else if (pc === "paper"){
-            console.log("pp");
-            return ("It's a draw! You both drew Paper!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ". It's a tie!";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else{
-            console.log("ps");
             computerScore++;
-            return ("You lose! Scissors beat Paper!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
     }
 
     if (player === "scissors"){
         if (pc === "rock"){
-            console.log("sr");
             computerScore++;
-            return "You lose! Rock beats Scissors!";
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else if (pc === "paper"){
-            console.log("sp");
             playerScore++;
-            return ("You win! Scissors beats Paper!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ".";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
         else{
-            console.log("ss");
-            return ("It's a draw! You both drew Scissors!");
+            div1.innerText = "You played " + player + ", and PC played " + pc + ". It's a tie!";
+            div.innerText = "Score: You - " + playerScore + ", PC - " + computerScore;
         }
     }
-    return ("That's not a valid entry! You lose a round!")
+    return;
 }
 
+//this allows the PC to choose rock, paper, or scissors randomly
 function getComputerChoice(){
     var choices = [
         "rock",
         "paper",
-        "scissors"
-    ]
-
+        "scissors"]
     let randomIndex = Math.floor(Math.random()*choices.length);
-    console.log(randomIndex);
     return choices[randomIndex];
 }
-
-function game(){
-    for(i = 0; i < 5; i++){
-        let playerSelection = window.prompt("Rock, paper, or scissors?");
-        let computerSelection = getComputerChoice();
-        console.log("PC chose: " + computerSelection);
-        alert(playRound(playerSelection.toLowerCase(), computerSelection));
-    }
-
-    if(playerScore>computerScore)
-        alert("You win! " + playerScore + ":" + computerScore);
-    else if(playerScore<computerScore)
-        alert("You lose! " + playerScore + ":" + computerScore);
-    else 
-        alert("It's a draw! " + playerScore + ":" + computerScore);
-}
-let playerScore = 0;
-let computerScore = 0;
-
-game();
